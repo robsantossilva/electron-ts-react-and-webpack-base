@@ -1,14 +1,18 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = [
   {
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+    },
+    devtool: 'source-map',
     mode: 'development',
     entry: './src/electron.ts',
     target: 'electron-main',
     module: {
       rules: [{
-        test: /\.ts$/,
+        test: /\.(js|ts|tsx)$/,
         include: /src/,
-        use: [{ loader: 'ts-loader' }]
+        use: [{ loader: 'babel-loader' }]
       }]
     },
     output: {
@@ -18,14 +22,18 @@ module.exports = [
   },
 
   {
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+      mainFields: ['main', 'module', 'browser'],
+    },
     mode: 'development',
     entry: './src/react.tsx',
     target: 'electron-renderer',
     devtool: 'source-map',
     module: { rules: [{
-      test: /\.ts(x?)$/,
+      test: /\.(js|ts|tsx)$/,
       include: /src/,
-      use: [{ loader: 'ts-loader' }]
+      use: [{ loader: 'babel-loader' }]
     }] },
     output: {
       path: __dirname + '/dist',
